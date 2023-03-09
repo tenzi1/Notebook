@@ -1,0 +1,29 @@
+{% extends '_base.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+Thoughts Lister
+{%endblock %}
+{%block content%}
+<div class="text-center">
+<h1>welcome {{request.user}}</h1>
+<h3>Got any Thoughts or Plan, Note your thoughts and plans here.</h3>
+</div>
+<div class="container">
+    <div class="col-md-8 mx-auto">
+    <form action="" method="POST" id="post-form">
+        {% csrf_token %}
+        {{ form|crispy }}
+         <div id="results"></div> <!-- errors go here -->
+        <button  class="btn btn-info">Create</button>
+    </form>
+    </div>
+    <div class="col-md-8 mx-auto">
+        <ul id="talk">
+        </ul>
+    </div>
+</div>
+  
+<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock%}
