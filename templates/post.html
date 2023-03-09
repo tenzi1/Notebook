@@ -1,0 +1,36 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+Create Post
+{% endblock title %}
+{% block content %}
+<h1>Create your post.</h1>
+<div class="container">
+    <form action="" method="POST" id="post-form">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button  class="btn btn-info">Create</button>
+    </form>
+</div>
+
+{% endblock content %}
+
+
+    <!-- <div class="row white">
+     <div class="col-md-12">
+        <ul id="talk">
+            {% for post in all_posts %}
+
+                <li id="post-{{post.pk}}">
+                    <strong>{{ post.text }}</strong> -
+                    <em>{{ post.author }}</em> -
+                    <span>{{ post.created }}</span> -
+                    <a id='delete-post-{{post.id}}' class="btn btn-danger">delete me</a>
+                </li>
+                
+            
+            {% endfor %}
+        </ul>
+    </div>
+</div> -->
