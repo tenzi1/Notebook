@@ -1,0 +1,108 @@
+{%extends '../_base.html'%}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<div class="col-md-8 mx-auto px-4">
+
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}Please sign in with one
+of your existing third party accounts. Or, <a  href="{{ signup_url }}">sign up</a>
+for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+
+<div class="socialaccount_ballot">
+ <ul class="socialaccount_providers">
+ <span class="badge">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </span>
+    
+  </ul>
+
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+<p>{% blocktrans %}If you have not created an account yet, then please
+<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+{% endif %}
+
+
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+    <form class="login" method="POST" action="{% url 'account_login' %}">
+      {% csrf_token %}
+      <!-- <div class="text-center mb-3">
+        <p>Sign in with:</p>
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="fab fa-facebook-f"></i>
+        </button>
+
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="fab fa-google"></i>
+        </button>
+
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="fab fa-twitter"></i>
+        </button>
+
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="fab fa-github"></i>
+        </button>
+      </div> -->
+
+      <p class="text-center">or:</p>
+
+      <!-- Email input -->
+     
+      <div class="form-outline mb-4">
+        {{ form.login|as_crispy_field }}
+      </div>
+
+      <div class="form-outline mb-4">
+        {{ form.password|as_crispy_field }}
+      </div>
+    
+
+      <!-- 2 column grid layout -->
+      <div class="row mb-4">
+        <div class="col-md-6 d-flex justify-content-center">
+          <!-- Checkbox -->
+          <div class="form-check mb-3 mb-md-0">
+            {{ form.remember|as_crispy_field}}
+           
+          </div>
+        </div>
+
+        <div class="col-md-6 d-flex justify-content-center">
+          <!-- Simple link -->
+          <a class="button secondaryAction" href="/accounts/password/reset/">Forgot Password?</a>
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      
+
+      <!-- Register buttons -->
+      <div class="row mb-4">
+        <div class="col-md-6 d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center">
+        <p>Not a member? <a href="#!">Register</a></p>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}
